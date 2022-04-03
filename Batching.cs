@@ -41,7 +41,7 @@ public class Batching : JobBase
     /// <summary>
     /// Gets the number of concurrent batches to commit.
     /// </summary>
-    [Params(1, 10)]
+    [Params(1, 10, 100)]
     public int ConcurrentBatches { get; set; }
 
     /// <summary>
