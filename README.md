@@ -12,6 +12,23 @@ Intel Core i7-7920HQ CPU 3.10GHz (Kaby Lake), 1 CPU, 8 logical and 4 physical co
   DefaultJob : .NET 6.0.2 (6.0.222.6406), X64 RyuJIT
 ```
 
+#### With 10 max concurrent commits
+| Method                | NumberOfEvents | ConcurrentBatches | Current Implementation | In-Memory Sequence Number |    InsertMany | Single event no transaction | Simulated batching |
+|-----------------------|----------------|-------------------|-----------------------:|--------------------------:|--------------:|----------------------------:|-------------------:|
+| **CommitEvents**      | **1**          | **1**             |           **9.045 ms** |              **3.218 ms** |  **3.038 ms** |                **1.599 ms** |       **1.607 ms** |
+| CommitAggregateEvents | 1              | 1                 |              10.631 ms |                  4.271 ms |      4.587 ms |                    4.490 ms |           4.576 ms |
+| **CommitEvents**      | **1**          | **10**            |         **185.578 ms** |             **16.062 ms** | **15.669 ms** |                **7.796 ms** |       **3.340 ms** |
+| CommitAggregateEvents | 1              | 10                |             160.353 ms |                 22.860 ms |     24.461 ms |                   23.881 ms |          18.093 ms |
+| **CommitEvents**      | **10**         | **1**             |          **27.726 ms** |             **15.227 ms** |  **3.339 ms** |                **3.307 ms** |       **3.197 ms** |
+| CommitAggregateEvents | 10             | 1                 |              28.147 ms |                 16.932 ms |      4.722 ms |                    4.724 ms |           4.703 ms |
+| **CommitEvents**      | **10**         | **10**            |         **490.392 ms** |             **78.581 ms** | **17.605 ms** |               **17.532 ms** |       **4.992 ms** |
+| CommitAggregateEvents | 10             | 10                |             574.842 ms |                 85.274 ms |     25.487 ms |                   25.488 ms |          19.969 ms |
+| **CommitEvents**      | **100**        | **1**             |         **182.336 ms** |            **137.177 ms** |  **5.074 ms** |                **5.013 ms** |       **4.955 ms** |
+| CommitAggregateEvents | 100            | 1                 |             161.238 ms |                150.989 ms |      7.030 ms |                    6.521 ms |           6.570 ms |
+| **CommitEvents**      | **100**        | **10**            |       **3,194.218 ms** |            **734.457 ms** | **33.373 ms** |               **30.649 ms** |      **21.548 ms** |
+| CommitAggregateEvents | 100            | 10                |           3,345.203 ms |                727.342 ms |     42.630 ms |                   39.188 ms |          36.524 ms |
+
+#### With 100 max concurrent commits
 The results are a little confusing, and it seems like running it concurrently with 100 breaks a few things.
 There might be some bugs in the code, so take them with a grain of salt until we can verify it:
 
